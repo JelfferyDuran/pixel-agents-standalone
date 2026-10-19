@@ -18,7 +18,7 @@ import type { TrackedAgent, ServerMessage } from "./types.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const PORT = parseInt(process.env.PORT || "3456", 10);
-const IDLE_SHUTDOWN_MS = 600_000; // 10 minutes
+const IDLE_SHUTDOWN_MS = parseInt(process.env.PIXEL_IDLE_SHUTDOWN_MS ?? "0", 10); // 0 = disabled (default for containers)
 
 // State
 const agents = new Map<string, TrackedAgent>(); // sessionId -> agent
