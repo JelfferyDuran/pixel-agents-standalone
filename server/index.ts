@@ -257,10 +257,10 @@ server.listen(PORT, () => {
   console.log(`Watching ~/.claude/projects/ for active sessions...`);
 });
 
-// Idle shutdown
+// Idle shutdown — only when IDLE_SHUTDOWN_MS is explicitly set > 0
 setInterval(() => {
-  if (agents.size === 0 && clients.size === 0 && Date.now() - lastActivityTime > IDLE_SHUTDOWN_MS) {
-    console.log("No active sessions or clients for 10 minutes, shutting down...");
+  if (IDLE_SHUTDOWN_MS > 0 && agents.size === 0 && clients.size === 0 && Date.now() - lastActivityTime > IDLE_SHUTDOWN_MS) {
+    console.log(`No active sessions or clients for ${IDLE_SHUTDOWN_MS / 1000 / 60} minutes, shutting down...`);
     watcher.stop();
     server.close();
     process.exit(0);
